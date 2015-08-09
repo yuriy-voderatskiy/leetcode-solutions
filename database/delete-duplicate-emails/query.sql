@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS Person;
+
+CREATE TABLE Person (
+  Id    INT PRIMARY KEY,
+  Email TEXT
+);
+
+INSERT INTO Person (Id, Email) VALUES (1, 'john@example.com');
+INSERT INTO Person (Id, Email) VALUES (2, 'bob@example.com');
+INSERT INTO Person (Id, Email) VALUES (3, 'john@example.com');
+
+DELETE FROM Person
+WHERE Person.Id IN (SELECT DISTINCT p2.Id
+                    FROM Person AS p1 JOIN Person AS p2 ON p1.Email = p2.Email AND p1.Id < p2.Id);
+
+SELECT Id, Email FROM Person;
