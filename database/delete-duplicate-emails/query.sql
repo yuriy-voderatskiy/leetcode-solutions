@@ -10,7 +10,11 @@ INSERT INTO Person (Id, Email) VALUES (2, 'bob@example.com');
 INSERT INTO Person (Id, Email) VALUES (3, 'john@example.com');
 
 DELETE FROM Person
-WHERE Person.Id IN (SELECT DISTINCT p2.Id
-                    FROM Person AS p1 JOIN Person AS p2 ON p1.Email = p2.Email AND p1.Id < p2.Id);
+WHERE Person.Id NOT IN (SELECT MIN(Id)
+                        FROM Person
+                        GROUP BY Email);
 
-SELECT Id, Email FROM Person;
+SELECT
+  Id,
+  Email
+FROM Person;
